@@ -1,0 +1,14 @@
+[Unit]
+Description=Alarm Clock and white noise machine
+After=network.target
+
+[Service]
+ExecStart=python -u /usr/local/alarm-clock/alarm_clock.py 
+Type=simple
+Restart=always
+Nice=-20
+
+[Install]
+WantedBy=default.target
+RequiredBy=network.target
+
