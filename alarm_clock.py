@@ -18,7 +18,6 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 logger.info('Set volume for DAC card to 99%')
-logger.info('Set volume for DAC card to 99%')
 
 # Shell out command to set volume to 100%
 
@@ -26,8 +25,6 @@ os.system("amixer -c 2 set Digital 99%")
 
 
 
-
-"""PyAudio Example: Play a wave file (callback version)."""
 
 wave_file="/usr/local/alarm-clock/rainsounds01.wav"
 # https://people.csail.mit.edu/hubert/pyaudio/docs/
@@ -40,8 +37,6 @@ wf = wave.open(wave_file, 'rb')
 p = pyaudio.PyAudio()
 
 info = p.get_host_api_info_by_index(0)
-print("Info is")
-print(info)
 numdevices = info.get('deviceCount')
 
 for i in range(0, numdevices):
@@ -59,6 +54,10 @@ def open_stream():
     s = p.open(format=p.get_format_from_width(wf.getsampwidth()),
                 channels=wf.getnchannels(),
                 rate=wf.getframerate(),
+		# By default this is 1024 which is too small
+		# I was having issues with stuttering, and i think it was due to scheduling of the process
+		# I think the callback was happening too often. Through experimentation (using stress) 8k seems quite stable. 16k was too big
+		frames_per_buffer = 8192,
                 output=True,
                 stream_callback=pyaudio_callback)
     # It's starts playing automatically... so i just immediately stop it

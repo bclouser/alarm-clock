@@ -3,7 +3,7 @@ Description=Alarm Clock and white noise machine
 After=network.target
 
 [Service]
-ExecStart=python -u /usr/local/alarm-clock/alarm_clock.py 
+ExecStart=python -u /usr/local/alarm-clock/alarm_clock.py /usr/local/alarm-clock/rainsounds02.wav
 Type=simple
 Restart=always
 Nice=-20
